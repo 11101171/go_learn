@@ -36,13 +36,44 @@ func Call(m map[string]interface{}, name string, params ...interface{}) (result 
 	return
 }
 
+type T struct {
+	A int
+	B string
+}
+type S struct {
+	F string `species:"gopher" color:"blue"`
+}
+
 func main() {
 	fmt.Println("Start Main func()")
+
 	// map 直接调用函数
-	foos := map[string]func(){"foor": foor}
+	funcs := map[string]func(){"foor": foor}
 	funcs["foor"]()
 	// 反射
 	xfuncs := map[string]interface{}{"say": say}
 	Call(xfuncs, "say", 123)
+
+	fmt.Println()
+	fmt.Println()
+	fmt.Println()
+	var x int = 1
+	fmt.Println("type: ", reflect.TypeOf(x))
+	fmt.Println("value: ", reflect.ValueOf(x))
+	fmt.Println("Kind:  ", reflect.ValueOf(x).Kind())
+	// fmt.Println("Kind is Int? ", reflect.ValueOf(x).Kind() == reflect.int)
+
+	t := T{12, "skidoo"}
+	s := reflect.ValueOf(&t).Elem()
+	typeOfT := s.Type()
+	for i := 0; i < s.NumField(); i++ {
+		f := s.Field(i)
+		fmt.Printf("%d %s %s = %v\n", i, typeOfT.Field(i).Name, f.Type(), f.Interface())
+	}
+
+	sv := S{}
+	st := reflect.TypeOf(sv)
+	field := st.Field(0)
+	fmt.Println(field.Tag.Get("color"), field.Tag.Get("species"))
 
 }

@@ -19,6 +19,8 @@ func main() {
 	now := time.Now()
 	p(now)
 
+	p(time.Now().UTC())
+
 	then := time.Date(2009, 11, 17, 20, 34, 58, 651387237, time.UTC)
 	p(then)
 
@@ -48,7 +50,7 @@ func main() {
 	p(then.Add(-diff))
 
 	t := time.Now()
-	p(t.Format(time.RFC3339))
+	//p("new time", t.Format(time.RFC3339))
 
 	// t1, e := time.Parse(
 	// time.RFC3339,
