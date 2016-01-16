@@ -17,6 +17,6 @@ func main() {
 func shower(c chan string, name string) {
 	for {
 		ch <- name
-		fmt.Printf("ch<-name[%s]", name)
+		fmt.Printf("ch<-name:[%s]", name)
 	}
 }
